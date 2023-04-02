@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use Database\Factories\ProductPropertyFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Carbon;
 
 /**
@@ -28,9 +30,20 @@ use Illuminate\Support\Carbon;
  * @method static Builder|ProductProperty wherePropertyId($value)
  * @method static Builder|ProductProperty wherePropertyValueId($value)
  * @method static Builder|ProductProperty whereUpdatedAt($value)
+ * @method static ProductPropertyFactory factory($count = null, $state = [])
  * @mixin Eloquent
  */
 class ProductProperty extends Model
 {
     use HasFactory;
+
+    public function property(): HasOne
+    {
+        return $this->hasOne(Property::class, 'id', 'property_id');
+    }
+
+    public function propertyValue(): HasOne
+    {
+        return $this->hasOne(PropertyValue::class, 'id', 'property_value_id');
+    }
 }

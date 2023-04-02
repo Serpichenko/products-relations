@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use Database\Factories\ProductFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Carbon;
 
 /**
@@ -28,6 +31,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Product whereId($value)
  * @method static Builder|Product whereTitle($value)
  * @method static Builder|Product whereUpdatedAt($value)
+ * @method static ProductFactory factory($count = null, $state = [])
  * @mixin Eloquent
  */
 class Product extends Model
@@ -37,5 +41,10 @@ class Product extends Model
     public function properties(): BelongsToMany
     {
         return $this->belongsToMany(Property::class, 'product_properties', 'product_id', 'id')->withTimestamps();
+    }
+
+    public function variants(): HasMany
+    {
+        return $this->hasMany(ProductProperty::class, 'product_id', 'id');
     }
 }

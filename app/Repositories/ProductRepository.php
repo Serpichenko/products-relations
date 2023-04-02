@@ -4,7 +4,10 @@ namespace App\Repositories;
 
 use App\Models\Product;
 use App\Models\ProductProperty;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 
 class ProductRepository
 {
@@ -12,12 +15,13 @@ class ProductRepository
     {
         return Product::all()->toBase();
     }
-    public function getProductById(int $id): ?Product
+
+    public function getProductByVariationId(int $variantId): ?Product
     {
-        /**
-         * @see Product::properties()
-         * @see ProductProperty::value()
-         */
-        return Product::with(['properties', 'properties.value'])->find($id);
+        return Product::whereHas('variants', function (Builder $query) use ($variantId) {
+            $query->where('variant_id', '=', $variantId);
+        })->with(['variants' => function (HasMany $query) use ($variantId) {
+            $query->where('variant_id', '=', $variantId);
+        }])->firstOrFail();
     }
 }

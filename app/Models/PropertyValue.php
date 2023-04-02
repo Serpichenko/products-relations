@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Database\Factories\PropertyValueFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -22,6 +23,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|PropertyValue whereId($value)
  * @method static Builder|PropertyValue whereUpdatedAt($value)
  * @method static Builder|PropertyValue whereValue($value)
+ * @method static PropertyValueFactory factory($count = null, $state = [])
  * @mixin Eloquent
  */
 class PropertyValue extends Model
