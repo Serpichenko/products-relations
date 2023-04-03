@@ -7,15 +7,15 @@ use App\Repositories\ProductPropertyRepository;
 use App\Repositories\ProductRepository;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(ProductRepository $productRepository): View
+    public function index(ProductRepository $productRepository)
     {
-        return view('products', ['products' => $productRepository->getAllProducts()]);
     }
 
     /**
@@ -40,7 +40,7 @@ class ProductController extends Controller
     public function show(int $id, ProductRepository $productRepository, ProductPropertyRepository $productPropertyRepository): View
     {
         $product = $productRepository->getProductByVariationId($id);
-        $productVariants = $product->variants->map(function ($item) {return $item->property_value_id; })->toArray();
+        $productVariants = $product->variants->pluck('property_value_id')->toArray();
         return view('product', ['product' => $product, 'productVariants' => $productVariants, 'variations' => $productPropertyRepository->getProductProperties($product->id, $id)]);
     }
 

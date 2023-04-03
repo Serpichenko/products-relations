@@ -17,7 +17,6 @@ return new class extends Migration
         Schema::create('product_properties', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->softDeletes();
             $table->unsignedBigInteger('variant_id');
             $table->foreignIdFor(Product::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignIdFor(Property::class)->constrained()->cascadeOnUpdate()->cascadeOnDelete();

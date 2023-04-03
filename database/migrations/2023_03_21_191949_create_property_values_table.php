@@ -16,6 +16,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('value');
+            $table->foreignIdFor(Property::class)->constrained()->cascadeOnUpdate()->cascadeOnDelete();
         });
     }
 

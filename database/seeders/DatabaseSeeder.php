@@ -16,10 +16,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Product::factory(20)->create();
-        Property::factory(100)->create();
-        PropertyValue::factory(150)->create();
-        ProductProperty::factory(1000)->create();
+        Product::factory(1)->create();
+        $this->call([
+            PropertySeeder::class,
+            PropertyValueSeeder::class,
+            ProductPropertiesSeeder::class,
+        ]);
         // \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([

@@ -4,7 +4,6 @@ namespace App\Repositories;
 
 use App\Models\ProductProperty;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Log;
 
 class ProductPropertyRepository
 {
